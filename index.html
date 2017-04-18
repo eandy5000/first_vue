@@ -36,8 +36,8 @@
                 <ul>
                     <li v-for="item in cart" :key="item.id">
                         name: {{ item.name }} qty: {{item.qty}} x {{item.price}} 
-                        <button v-if="item.qty >= 1" v-on:click="cartRemover(item)">-</button>
-                        <button v-on:click="cartAdder(item)">+</button>
+                        <button v-if="item.qty >= 1" v-on:click="decCart(item)">-</button>
+                        <button v-on:click="incCart(item)">+</button>
                     </li>
                 </ul>
             </div>

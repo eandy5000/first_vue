@@ -6,12 +6,13 @@ new Vue({
         addToCart: function(product) {
             var match = false;
             if(!this.cart.length) {
-                return this.cart.push({
+                this.cart.push({
                     id: product.id,
                     name: product.name,
                     price: product.price,
                     qty: 1
                 });
+                return this.total += product.price;
             }
             for (var i = 0; i < this.cart.length; i++) {
                 if(this.cart[i].id === product.id) {
@@ -21,6 +22,7 @@ new Vue({
                 }
             }
             if(!match){
+                this.total += product.price;
                 return this.cart.push({
                     id: product.id,
                     name: product.name,
@@ -28,7 +30,24 @@ new Vue({
                     qty: 1
                 });
             }
+        },
+        incCart: function(item) {
+            for(var i = 0; i < this.cart.length; i++) {
+                if(item.id === this.cart[i].id) {
+                    this.cart[i].qty++;
+                    this.total += this.cart[i].price;
+                }
+            }          
+        },
+        decCart: function(item) {
+            for(var i = 0; i < this.cart.length; i++) {
+                if(item.id === this.cart[i].id) {
+                    this.cart[i].qty--;
+                    this.total -= this.cart[i].price;
+                }
+            }
         }
+
     },
     filters: {
         currency: function(num) {
