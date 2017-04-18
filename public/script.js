@@ -1,4 +1,4 @@
-var PRICE = 9.99;
+
 var PRICE = 9.99;
 
 new Vue({
@@ -26,7 +26,7 @@ new Vue({
                 this.total += PRICE;
                 return this.cart.push({
                     id: product.id,
-                    name: product.name,
+                    title: product.title,
                     price: PRICE,
                     qty: 1
                 });
@@ -58,15 +58,25 @@ new Vue({
         }
 
     },
-    // filters: {
-    //     currency: function(num) {
-    //         return '$' + num.toFixed(2)
-    //     }
-    // },
+    filters: {
+        currency: function(num) {
+            return '$' + num.toFixed(2)
+        },
+        zero: function(num) {
+            if(num === "$-0.00") {
+              return  num = "$0.00"
+            }
+            return num;
+        }
+    },
     data: {
         total: 0,
-        search: '',
+        search: 'cats',
         products: [],
-        cart: []
+        cart: [],
+        price: PRICE
+    },
+    mounted: function() {
+        this.onSubmit();
     }
 });

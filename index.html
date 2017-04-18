@@ -30,8 +30,9 @@
                     <img v-bind:src="product.link" alt="" width="200">
                 </div>
                 <div>
-                    <h4 class="product-title">{{product.title}} price: {{product.price }}</h4>
+                    <h4 class="product-title">{{product.title}} price: {{ price | currency }}</h4>
                     <button class="add-to-cart btn" v-on:click="addToCart(product)">add to cart</button>
+                    <hr/>
                 </div>
             </div>
         </div>
@@ -41,10 +42,10 @@
                 <h4>Your cart is empty</h4>
             </div>         
             <div v-else>
-                <h4>Total: {{ total }}</h4>
+                <h4>Total: {{ total | currency | zero}}</h4>
                 <ul>
                     <li v-for="item in cart" :key="item.id">
-                        name: {{ item.name }} qty: {{item.qty}} x {{item.price}} 
+                        name: {{ item.title }} qty: {{item.qty}} x {{price | currency}} 
                         <button v-if="item.qty >= 1" v-on:click="decCart(item)">-</button>
                         <button v-on:click="incCart(item)">+</button>
                     </li>
