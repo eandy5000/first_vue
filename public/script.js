@@ -52,7 +52,7 @@ new Vue({
             this.$http
                 .get('/search/'.concat(this.search))
                 .then(function(res){
-                    this.products = res.data;
+                    this.products = res.data.slice(0,10);
                     this.search = '';
                 });
         }
