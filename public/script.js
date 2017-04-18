@@ -1,4 +1,5 @@
 var PRICE = 9.99;
+var PRICE = 9.99;
 
 new Vue({
     el: '#app',
@@ -8,25 +9,25 @@ new Vue({
             if(!this.cart.length) {
                 this.cart.push({
                     id: product.id,
-                    name: product.name,
-                    price: product.price,
+                    title: product.title,
+                    price: PRICE,
                     qty: 1
                 });
-                return this.total += product.price;
+                return this.total += PRICE;
             }
             for (var i = 0; i < this.cart.length; i++) {
                 if(this.cart[i].id === product.id) {
                     match = true;
                     this.cart[i].qty++;
-                    return this.total += this.cart[i].price;
+                    return this.total += PRICE;
                 }
             }
             if(!match){
-                this.total += product.price;
+                this.total += PRICE;
                 return this.cart.push({
                     id: product.id,
                     name: product.name,
-                    price: product.price,
+                    price: PRICE,
                     qty: 1
                 });
             }
@@ -35,7 +36,7 @@ new Vue({
             for(var i = 0; i < this.cart.length; i++) {
                 if(item.id === this.cart[i].id) {
                     this.cart[i].qty++;
-                    this.total += this.cart[i].price;
+                    return this.total += PRICE;
                 }
             }          
         },
@@ -43,25 +44,29 @@ new Vue({
             for(var i = 0; i < this.cart.length; i++) {
                 if(item.id === this.cart[i].id) {
                     this.cart[i].qty--;
-                    this.total -= this.cart[i].price;
+                    return this.total -= PRICE;
                 }
             }
+        },
+        onSubmit: function() {
+            this.$http
+                .get('/search/'.concat(this.search))
+                .then(function(res){
+                    this.products = res.data;
+                    this.search = '';
+                });
         }
 
     },
-    filters: {
-        currency: function(num) {
-            return '$' + num.toFixed(2)
-        }
-    },
+    // filters: {
+    //     currency: function(num) {
+    //         return '$' + num.toFixed(2)
+    //     }
+    // },
     data: {
         total: 0,
-        products: [
-            {id: 0, name: 'one', price: 9.99 },
-            {id: 1, name: 'two', price: 5.99 },
-            {id: 2, name: 'three', price: 3.29 },
-            {id: 3, name: 'four', price: 11.18 }
-        ],
+        search: '',
+        products: [],
         cart: []
     }
 });

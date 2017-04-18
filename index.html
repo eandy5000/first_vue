@@ -17,13 +17,22 @@
 <div id="app">
     <div class="header">
         <h1>Vue.js Poster Store</h1>
+        <form class="searchbar" v-on:submit.prevent="onSubmit">
+            <input type="text" placeholder="search" v-model="search">
+            <input type="submit" class="btn">
+        </form>
     </div>
     <div class="main">
         <div class="products">
             <p>Products go here.</p>
             <div v-for="product in products" v-bind:key="product.id">
-                <h4>{{product.name}} price: {{product.price | currency}}</h4>
-                <button v-on:click="addToCart(product)">add to cart</button>
+                <div class="product-image">
+                    <img v-bind:src="product.link" alt="" width="200">
+                </div>
+                <div>
+                    <h4 class="product-title">{{product.title}} price: {{product.price }}</h4>
+                    <button class="add-to-cart btn" v-on:click="addToCart(product)">add to cart</button>
+                </div>
             </div>
         </div>
         <div class="cart">
@@ -32,7 +41,7 @@
                 <h4>Your cart is empty</h4>
             </div>         
             <div v-else>
-                <h4>Total: {{ total | currency}}</h4>
+                <h4>Total: {{ total }}</h4>
                 <ul>
                     <li v-for="item in cart" :key="item.id">
                         name: {{ item.name }} qty: {{item.qty}} x {{item.price}} 
@@ -49,6 +58,7 @@
 <!-- Scripts -->
 <script src="/reload/reload.js"></script>
 <script src="node_modules/vue/dist/vue.js"></script>
+<script src="node_modules/vue-resource/dist/vue-resource.js"></script>
 <script type="text/javascript" src="public/script.js"></script>
 
 </body>
